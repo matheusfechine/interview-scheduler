@@ -2,11 +2,11 @@
 
 This project solves a Challenge for Bridge351.
 
-How to Build project
+### How to Run the project
 
-since you have Maven previously installed on your computer, just run the command
+since you have Maven previously installed on your computer, just run the command on the root of the project
 
-```maven clean install```
+```mvn spring-boot:run```
 
 ## Understanding the Project
 
