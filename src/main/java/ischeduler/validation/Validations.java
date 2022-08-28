@@ -22,10 +22,10 @@ public class Validations {
 
 	@Autowired
 	private CandidateService candidateService;
-	
+
 	public void validateInterviewerAvailability(List<Availability> availabilities, Availability availability)
 			throws AvailabilityExpeption, InterviewerNotFoundException {
-		if(availability.getInterviewer() == null) {
+		if (availability.getInterviewer() == null) {
 			return;
 		}
 		Interviewer interviewer = interviewerService.findBy(availability.getInterviewer().getName());
@@ -33,11 +33,11 @@ public class Validations {
 		if (interviewer == null) {
 			throw new InterviewerNotFoundException("Interviewer Not Found!");
 		}
-		
 	}
+
 	public void validateCandidateAvailability(List<Availability> availabilities, Availability availability)
 			throws AvailabilityExpeption, CandidateNotFoundException {
-		if(availability.getCandidate() == null) {
+		if (availability.getCandidate() == null) {
 			return;
 		}
 		Candidate candidate = candidateService.findBy(availability.getCandidate().getName());
@@ -45,7 +45,7 @@ public class Validations {
 		if (candidate == null) {
 			throw new CandidateNotFoundException("Interviewer Not Found!");
 		}
-		
+
 	}
 
 }
