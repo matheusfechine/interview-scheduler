@@ -37,5 +37,9 @@ Endpoints:
 | POST 		  | /availability/arrange | {"interviewer":{"name":"Ingrid"},"candidate":{"name":"Jose"}} | It will match periods that Interviewer and Candidates can schedule an interview |
 
 
+### Last but not least...
+
+Some Unit Tests can be found in ```/src/test/java``` folders
+
 
 
