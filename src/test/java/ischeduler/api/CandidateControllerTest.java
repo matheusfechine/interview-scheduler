@@ -44,7 +44,7 @@ public class CandidateControllerTest {
 		ResponseEntity<Candidate> response = controller.register(new Candidate());
 		verify(service).register(any(Candidate.class));
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
-		assertEquals(response.getBody().getName(), candidateOne.getName());
+		assertEquals(response.getBody(), candidateOne);
 	}
 	
 	@Test
@@ -66,8 +66,8 @@ public class CandidateControllerTest {
 		when(service.list()).thenReturn(expectedList);
 		ResponseEntity response = controller.list();
 		verify(service).list();
-		assertEquals(response.getStatusCode(), HttpStatus.OK);
 		List<Candidate> actualList = (List<Candidate>) response.getBody();
-		assertEquals(expectedList.get(0).getName(), actualList.get(0).getName());
+		assertEquals(response.getStatusCode(), HttpStatus.OK);
+		assertEquals(expectedList, actualList);
 	}
 }
