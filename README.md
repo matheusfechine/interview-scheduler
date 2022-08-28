@@ -1,7 +1,5 @@
 # interview-scheduler
 
-This project solves a Challenge for Bridge351.
-
 ### How to Run the project
 
 since you have Maven previously installed on your computer, just run the command on the root of the project
@@ -16,6 +14,9 @@ This project consists basically in 3 Entities.
 | Candidate | represents the Candidate |
 | Interviewer | represents the Interviewer |
 | Availability | represents slots available of each Candidate and Interviwer |
+
+Controllers are in ```ischedule.api``` path
+Services, where the business rules are, are in ```ischedule.service``` path
 
 ### API Calls
 
