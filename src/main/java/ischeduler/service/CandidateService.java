@@ -23,4 +23,9 @@ public class CandidateService {
 		return candidates;
 	}
 
+	public Candidate findBy(String name) {
+		return candidates.stream().filter(find -> find.getName().equals(name))
+				.findFirst().orElse(null);
+	}
+
 }

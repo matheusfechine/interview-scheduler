@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +25,7 @@ public class AvailabilityController {
 	@Autowired
 	private AvailabilityService service;
 	
+	@SuppressWarnings({ "static-access", "rawtypes" })
 	@PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity register(@RequestBody Availability availability)
@@ -47,9 +47,24 @@ public class AvailabilityController {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	@GetMapping(value = "/list/{interviewerName}", produces = APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/list/interviewer/{interviewerName}", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity listBy(@PathVariable("interviewerName") String name) {
-		return ResponseEntity.ok(service.listBy(name));
+	public ResponseEntity listByInterviewer(@PathVariable("interviewerName") String name) {
+		return ResponseEntity.ok(service.listByInterviewer(name));
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping(value = "/list/candidate/{candidateName}", produces = APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity listByCandidate(@PathVariable("candidateName") String name) {
+		return ResponseEntity.ok(service.listByCandidate(name));
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@PostMapping(value = "/arrange", produces = APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity listBy(@RequestBody Availability availability) {
+		return ResponseEntity.ok(service.listForArrangeBy(availability));
+	}
+	
 }

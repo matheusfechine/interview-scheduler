@@ -50,4 +50,6 @@ public class CandidateController {
 	public ResponseEntity list() {
 		return ResponseEntity.ok(service.list());
 	}
+	
+	
 }

@@ -38,7 +38,7 @@ public class ValidationsTest {
 		Interviewer interviewer = new Interviewer();
 		interviewer.setName("Jose");
 		availability.setInterviewer(interviewer);
-		validation.validateAvailability(Arrays.asList(availability), availability);
+		validation.validateInterviewerAvailability(Arrays.asList(availability), availability);
 		
 	}
 
