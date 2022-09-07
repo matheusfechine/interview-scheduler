@@ -2,7 +2,7 @@
 
 ### How to Run the project
 
-since you have Maven previously installed on your computer, just run the command on the root of the project
+since you have Maven previously installed on your computer, just run the command in the root of the project
 
 ```mvn spring-boot:run```
 
@@ -15,8 +15,15 @@ This project consists basically in 3 Entities.
 | Interviewer | represents the Interviewer |
 | Availability | represents slots available of each Candidate and Interviwer |
 
-Controllers are in ```ischedule.api``` path
-Services, where the business rules are, are in ```ischedule.service``` path
+Controllers are in ```com.ischedule.api``` package
+
+Services, where the business rules are, are in ```com.ischedule.service``` package
+
+Repositories (DAO layer) are in ```com.ischedule.repository``` package
+
+**Note**
+> Data will be stored in a memory database. For this project, used [H2 Database](https://www.h2database.com/). 
+It means that all data will be lost after shut down the server.
 
 ### API Calls
 
