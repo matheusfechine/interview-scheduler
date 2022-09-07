@@ -70,7 +70,7 @@ public class InterviewerServiceTest {
 		expected.setId(1);
 		when(repository.findAll()).thenReturn(Arrays.asList(expected));
 		List<Interviewer> actual = service.list();
-		assertEquals(expected, actual);
+		assertEquals(Arrays.asList(expected), actual);
 	}
 	
 }

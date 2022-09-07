@@ -37,8 +37,10 @@ public class Availability {
     @JoinColumn(name = "ID_CANDIDATE")
     @OnDelete(action = OnDeleteAction.CASCADE)
 	private Candidate candidate;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd hh:mm")
 	private Date initTime;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd hh:mm")
 	private Date endTime;
 	

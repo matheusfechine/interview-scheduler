@@ -63,9 +63,13 @@ public class AvailabilityService {
 	public List<Availability> listForArrangeBy(Availability availability) {
 		List<Availability> candidates = listByCandidate(availability.getCandidate().getName());
 		List<Availability> interviewers = listByInterviewer(availability.getInterviewer().getName());
-		return candidates.stream().filter(c -> interviewers.stream()
+		List<Availability> availabilities = candidates.stream().filter(c -> interviewers.stream()
 				.anyMatch(i -> i.getInitTime().equals(c.getInitTime())))
 				.collect(Collectors.toList());
+		availabilities.forEach(each -> each.setCandidate(availability.getCandidate()));
+		availabilities.forEach(each -> each.setInterviewer(availability.getInterviewer()));
+		return availabilities;
+		
 	}
 
 }

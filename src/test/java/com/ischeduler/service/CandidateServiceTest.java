@@ -51,6 +51,6 @@ public class CandidateServiceTest {
 		expected.setId(1);
 		when(repository.findAll()).thenReturn(Arrays.asList(expected));
 		List<Candidate> actual = service.list();
-		assertEquals(expected, actual);
+		assertEquals(Arrays.asList(expected), actual);
 	}
 }
