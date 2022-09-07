@@ -1,31 +1,30 @@
 package ischeduler.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ischeduler.exception.CandidateExistsException;
 import ischeduler.model.Candidate;
+import ischeduler.repository.CandidateRepository;
 
 @Service
 public class CandidateService {
 
-	private List<Candidate> candidates = new ArrayList<Candidate>();
+	@Autowired
+	private CandidateRepository repository;
 	
 	public Candidate register(Candidate candidate) throws CandidateExistsException {
-		candidate.setId(candidates.size()+1);
-		candidates.add(candidate);
-		return candidate;
+		return repository.save(candidate);
 	}
 
 	public List<Candidate> list() {
-		return candidates;
+		return repository.findAll();
 	}
 
 	public Candidate findBy(String name) {
-		return candidates.stream().filter(find -> find.getName().equals(name))
-				.findFirst().orElse(null);
+		return repository.findByName(name);
 	}
 
 }

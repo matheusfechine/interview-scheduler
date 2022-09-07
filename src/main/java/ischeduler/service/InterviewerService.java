@@ -1,37 +1,30 @@
 package ischeduler.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ischeduler.exception.InterviewerExistsException;
 import ischeduler.model.Interviewer;
+import ischeduler.repository.InterviewerRepository;
 
 @Service
 public class InterviewerService {
 
-	private static  List<Interviewer> interviewers;
-	
-	public InterviewerService() {
-		if(interviewers==null) {
-			interviewers = new ArrayList<Interviewer>();
-		}
-	}
+	@Autowired
+	private InterviewerRepository repository;
 	
 	public Interviewer register(Interviewer interviewer) throws InterviewerExistsException {
-		interviewer.setId(interviewers.size()+1);
-		interviewers.add(interviewer);
-		return interviewer;
+		return repository.save(interviewer);
 	}
 
 	public List<Interviewer> list() {
-		return interviewers;
+		return repository.findAll();
 	}
 
 	public Interviewer findBy(final String name) {
-		return interviewers.stream().filter(find -> find.getName().equals(name))
-				.findFirst().orElse(null);
+		return repository.findByName(name);
 	}
 
 }

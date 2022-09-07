@@ -9,9 +9,11 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import static org.mockito.Mockito.*;
 
 import ischeduler.exception.AvailabilityExpeption;
 import ischeduler.exception.CandidateNotFoundException;
@@ -19,8 +21,10 @@ import ischeduler.exception.InterviewerNotFoundException;
 import ischeduler.model.Availability;
 import ischeduler.model.Candidate;
 import ischeduler.model.Interviewer;
+import ischeduler.repository.AvailabilityRepository;
 import ischeduler.validation.Validations;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AvailabilityServiceTest {
 
 	@InjectMocks
@@ -28,6 +32,9 @@ public class AvailabilityServiceTest {
 
 	@Mock
 	private Validations validation;
+	
+	@Mock
+	private AvailabilityRepository repository;
 	
 	@Mock
 	private InterviewerService interviewerService;
@@ -41,7 +48,6 @@ public class AvailabilityServiceTest {
 	@Before
 	public void setUp() {
 		createAvailabilities();
-		MockitoAnnotations.initMocks(this);
 	}
 
 	private void createAvailabilities() {
@@ -74,12 +80,10 @@ public class AvailabilityServiceTest {
 		expectedAvailabilities.add(availabilityOne);
 		expectedAvailabilities.add(availabilityTwo);
 		expectedAvailabilities.add(availabilityThree);
-		Availability availabilityToBeRegistered = new Availability();
-		availabilityToBeRegistered.setInterviewer(interviewer);
-		availabilityToBeRegistered.setInitTime(scheduledDay.withHourOfDay(10).withMinuteOfHour(0).toDate());
-		availabilityToBeRegistered.setEndTime(scheduledDay.withHourOfDay(13).withMinuteOfHour(0).toDate());
-
-		List<Availability> actualAvailabilities = service.add(availabilityToBeRegistered);
+		
+		when(repository.findAll()).thenReturn(expectedAvailabilities);
+		
+		List<Availability> actualAvailabilities = service.add(new Availability());
 
 		assertEquals(expectedAvailabilities, actualAvailabilities);
 
@@ -96,14 +100,8 @@ public class AvailabilityServiceTest {
 		availabilityFour.setInitTime(baseDate.withHourOfDay(10).toDate());
 		availabilityFour.setEndTime(baseDate.withHourOfDay(11).toDate());
 		expectedAvailabilities.add(availabilityFour);
-		service.add(availabilityFour);
 		
-		
-		Availability availabilityToBeRegistered = new Availability();
-		availabilityToBeRegistered.setInterviewer(interviewer);
-		availabilityToBeRegistered.setInitTime(scheduledDay.withHourOfDay(10).withMinuteOfHour(0).toDate());
-		availabilityToBeRegistered.setEndTime(scheduledDay.withHourOfDay(13).withMinuteOfHour(0).toDate());
-		service.add(availabilityToBeRegistered);
+		when(repository.findByInterviewerName(anyString())).thenReturn(expectedAvailabilities);
 		
 		List<Availability> actualAvailabilities = service.listByInterviewer("Jose");
 		
@@ -120,7 +118,8 @@ public class AvailabilityServiceTest {
 		candidateCarlToBeRegistered.setCandidate(carl);
 		candidateCarlToBeRegistered.setInitTime(scheduledDay.withHourOfDay(10).withMinuteOfHour(0).toDate());
 		candidateCarlToBeRegistered.setEndTime(scheduledDay.withHourOfDay(11).withMinuteOfHour(0).toDate());
-		service.add(candidateCarlToBeRegistered);
+		
+		when(repository.findByCandidateName(anyString())).thenReturn(Arrays.asList(candidateCarlToBeRegistered));
 		
 		Availability interviewerIngridToBeRegistered = new Availability();
 		Interviewer ingrid = new Interviewer();
@@ -128,7 +127,8 @@ public class AvailabilityServiceTest {
 		interviewerIngridToBeRegistered.setInterviewer(ingrid);
 		interviewerIngridToBeRegistered.setInitTime(scheduledDay.withHourOfDay(10).withMinuteOfHour(0).toDate());
 		interviewerIngridToBeRegistered.setEndTime(scheduledDay.withHourOfDay(13).withMinuteOfHour(0).toDate());
-		service.add(interviewerIngridToBeRegistered);
+		
+		when(repository.findByInterviewerName(anyString())).thenReturn(Arrays.asList(interviewerIngridToBeRegistered));
 		
 		Availability search = new Availability();
 		search.setCandidate(carl);

@@ -1,6 +1,5 @@
 package ischeduler.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,19 +11,21 @@ import ischeduler.exception.AvailabilityExpeption;
 import ischeduler.exception.CandidateNotFoundException;
 import ischeduler.exception.InterviewerNotFoundException;
 import ischeduler.model.Availability;
+import ischeduler.repository.AvailabilityRepository;
 import ischeduler.validation.Validations;
 
 @Service
 public class AvailabilityService {
 
-	private List<Availability> availabilities = new ArrayList<Availability>();
-
+	@Autowired
+	private AvailabilityRepository repository;
+	
 	@Autowired
 	private Validations validation;
 
 	public List<Availability> add(Availability availability)
 			throws AvailabilityExpeption, InterviewerNotFoundException, CandidateNotFoundException {
-
+		List<Availability> availabilities = repository.findAll();
 		validation.validateInterviewerAvailability(availabilities, availability);
 		validation.validateCandidateAvailability(availabilities, availability);
 
@@ -42,25 +43,21 @@ public class AvailabilityService {
 			}
 			toRegister.setInitTime(new DateTime(availability.getInitTime()).plusHours(i).toDate());
 			toRegister.setEndTime(new DateTime(availability.getInitTime()).plusHours(i + 1).toDate());
-			availabilities.add(toRegister);
+			repository.save(toRegister);
 		}
 		return availabilities;
 	}
 
 	public List<Availability> list() {
-		return availabilities;
+		return repository.findAll();
 	}
 
 	public List<Availability> listByInterviewer(String name) {
-		return availabilities.stream()
-				.filter(find -> find.getCandidate() == null && find.getInterviewer().getName().equals(name))
-				.collect(Collectors.toList());
+		return repository.findByInterviewerName(name);
 	}
 
 	public List<Availability> listByCandidate(String name) {
-		return availabilities.stream()
-				.filter(find -> find.getInterviewer() == null && find.getCandidate().getName().equals(name))
-				.collect(Collectors.toList());
+		return repository.findByCandidateName(name);
 	}
 
 	public List<Availability> listForArrangeBy(Availability availability) {

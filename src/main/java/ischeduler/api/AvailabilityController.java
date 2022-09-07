@@ -3,6 +3,7 @@ package ischeduler.api;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.text.ParseException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,45 +26,41 @@ public class AvailabilityController {
 	@Autowired
 	private AvailabilityService service;
 	
-	@SuppressWarnings({ "static-access", "rawtypes" })
 	@PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity register(@RequestBody Availability availability)
+	public ResponseEntity<String> register(@RequestBody Availability availability)
 			throws ParseException {
 		try {
 			service.add(availability);
 		} catch (Exception e) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+			new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity
 					.ok(String.format("An error occured: %s", e.getMessage())); 
 		}
 		return ResponseEntity.ok("Success!");
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/list", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity list() {
+	public ResponseEntity<List<Availability>> list() {
 		return ResponseEntity.ok(service.list());
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/list/interviewer/{interviewerName}", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity listByInterviewer(@PathVariable("interviewerName") String name) {
+	public ResponseEntity<List<Availability>> listByInterviewer(@PathVariable("interviewerName") String name) {
 		return ResponseEntity.ok(service.listByInterviewer(name));
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/list/candidate/{candidateName}", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity listByCandidate(@PathVariable("candidateName") String name) {
+	public ResponseEntity<List<Availability>> listByCandidate(@PathVariable("candidateName") String name) {
 		return ResponseEntity.ok(service.listByCandidate(name));
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/arrange", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity listBy(@RequestBody Availability availability) {
+	public ResponseEntity<List<Availability>> listBy(@RequestBody Availability availability) {
 		return ResponseEntity.ok(service.listForArrangeBy(availability));
 	}
 	
