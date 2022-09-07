@@ -1,6 +1,7 @@
 package com.ischeduler.api;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +9,17 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
-import com.ischeduler.api.AvailabilityController;
 import com.ischeduler.model.Availability;
 import com.ischeduler.model.Interviewer;
 import com.ischeduler.service.AvailabilityService;
 
-import static org.mockito.Mockito.*;
-
+@RunWith(MockitoJUnitRunner.class)
 public class AvailabilityControllerTest {
 
 	@InjectMocks
@@ -37,7 +37,6 @@ public class AvailabilityControllerTest {
 	@Before
 	public void setUp() {
 		createAvailabilities();
-		MockitoAnnotations.initMocks(this);
 	}
 
 	private void createAvailabilities() {

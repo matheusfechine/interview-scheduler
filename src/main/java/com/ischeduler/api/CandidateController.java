@@ -2,6 +2,8 @@ package com.ischeduler.api;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +25,9 @@ public class CandidateController {
 	@Autowired
 	private CandidateService service;
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/register", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity register(@RequestBody Candidate candidate) {
+	public ResponseEntity<Object> register(@RequestBody Candidate candidate) {
 		Candidate registered;
 		try {
 			registered = service.register(candidate);
@@ -44,10 +45,9 @@ public class CandidateController {
 		return new ResponseEntity<Candidate>(HttpStatus.OK);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping(value = "/list", produces = APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity list() {
+	public ResponseEntity<List<Candidate>> list() {
 		return ResponseEntity.ok(service.list());
 	}
 	
