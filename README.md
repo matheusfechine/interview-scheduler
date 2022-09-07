@@ -1,7 +1,5 @@
 # interview-scheduler
 
-This project solves a Challenge for Bridge351.
-
 ### How to Run the project
 
 since you have Maven previously installed on your computer, just run the command on the root of the project
@@ -16,6 +14,9 @@ This project consists basically in 3 Entities.
 | Candidate | represents the Candidate |
 | Interviewer | represents the Interviewer |
 | Availability | represents slots available of each Candidate and Interviwer |
+
+Controllers are in ```ischedule.api``` path
+Services, where the business rules are, are in ```ischedule.service``` path
 
 ### API Calls
 
@@ -36,6 +37,10 @@ Endpoints:
 | POST 		  | /availability/register | {"interviewer":{"name":"Ingrid"},"initTime":"2022-01-01 10:00","endTime":"2022-01-01 15:00"} | Register Availability for an Interviewer with interval of hours. Date format must be in "yyyy-MM--dd hh:mm" pattern |
 | POST 		  | /availability/arrange | {"interviewer":{"name":"Ingrid"},"candidate":{"name":"Jose"}} | It will match periods that Interviewer and Candidates can schedule an interview |
 
+
+### Last but not least...
+
+Some Unit Tests can be found in ```/src/test/java``` folders
 
 
 
